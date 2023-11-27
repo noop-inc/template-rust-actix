@@ -1,0 +1,37 @@
+---
+components:
+  - name: ActixApi
+    type: service
+    image: rust:latest
+    port: 8080
+    build:
+      steps:
+        - directory: /app
+        - copy: [Cargo.toml, Cargo.lock]
+          destination: ./
+        - copy: src
+          destination: ./src
+        - copy: sql
+          destination: ./sql
+        - run: cargo build --release
+    runtime:
+      command: /app/target/release/actix-api
+      variables:
+        PG\.USER:
+          $resources: PgDatabase.username
+        PG\.PORT:
+          $resources: PgDatabase.port
+        PG\.HOST:
+          $resources: PgDatabase.host
+        PG\.PASSWORD:
+          $resources: PgDatabase.password
+        PG\.DBNAME:
+          $resources: PgDatabase.database
+        PG\.POOL\.MAX_SIZE: "16"
+        SERVER_ADDR: "rust.local.noop.app"
+routes:
+  - target:
+      component: ActixApi
+resources:
+  - name: PgDatabase
+    type: postgresql
