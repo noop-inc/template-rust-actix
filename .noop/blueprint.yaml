@@ -17,17 +17,17 @@ components:
     runtime:
       command: /app/target/release/actix-api
       variables:
-        PG\.USER:
+        "PG\.USER":
           $resources: PgDatabase.username
-        PG\.PORT:
+        "PG\.PORT":
           $resources: PgDatabase.port
-        PG\.HOST:
+        "PG\.HOST":
           $resources: PgDatabase.host
-        PG\.PASSWORD:
+        "PG\.PASSWORD":
           $resources: PgDatabase.password
-        PG\.DBNAME:
+        "PG\.DBNAME":
           $resources: PgDatabase.database
-        PG\.POOL\.MAX_SIZE: "16"
+        "PG\.POOL\.MAX_SIZE": "16"
         SERVER_ADDR: "rust.local.noop.app"
 routes:
   - target:
