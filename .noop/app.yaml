@@ -32,7 +32,7 @@ components:
         PG__DBNAME:
           $resources: PgDatabase.database
         PG__POOL__MAX_SIZE: "16"
-        SERVER_ADDR: "rust.local.noop.app"
+        SERVER_ADDR: "0.0.0.0"
 routes:
   - target:
       component: ActixApi
