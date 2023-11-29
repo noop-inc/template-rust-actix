@@ -135,7 +135,7 @@ async fn main() -> std::io::Result<()> {
     dotenv().ok();
 
     let config_ = Config::builder()
-        .add_source(::config::Environment::default())
+        .add_source(::config::Environment::default().separator("__"))
         .build()
         .unwrap();
 
