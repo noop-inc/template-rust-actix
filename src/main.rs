@@ -150,7 +150,7 @@ async fn main() -> std::io::Result<()> {
                 .route(web::get().to(get_users)),
         )
     })
-    .bind(config.server_addr.clone())?
+    .bind((config.server_addr.clone(), 8080))?
     .run();
     println!("Server running at http://{}/", config.server_addr);
 
