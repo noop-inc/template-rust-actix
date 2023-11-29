@@ -17,6 +17,8 @@ components:
     runtime:
       command: /app/target/release/actix-api
       variables:
+        PG__URL:
+          $resources: PgDatabase.url
         PG__USER:
           $resources: PgDatabase.username
         PG__PORT:
