@@ -1,0 +1,43 @@
+---
+components:
+  - name: ActixApi
+    type: service
+    image: rust:latest
+    port: 8080
+    build:
+      steps:
+        - run: apt install -y libpq-dev
+        - run: cargo install diesel_cli --no-default-features --features postgres
+        - directory: /app
+        - copy: [Cargo.toml, Cargo.lock, migrate_and_run.sh]
+          destination: ./
+        - copy: src
+          destination: ./src
+        - copy: migrations
+          destination: ./migrations
+        - run: cargo build --release
+    runtime:
+      resources:
+        - PgDatabase
+      command: /app/migrate_and_run.sh
+      variables:
+        PG__URL:
+          $resources: PgDatabase.url
+        PG__USER:
+          $resources: PgDatabase.username
+        PG__PORT:
+          $resources: PgDatabase.port
+        PG__HOST:
+          $resources: PgDatabase.host
+        PG__PASSWORD:
+          $resources: PgDatabase.password
+        PG__DBNAME:
+          $resources: PgDatabase.database
+        PG__POOL__MAX_SIZE: "16"
+        SERVER_ADDR: "0.0.0.0"
+routes:
+  - target:
+      component: ActixApi
+resources:
+  - name: PgDatabase
+    type: postgresql
