@@ -8,6 +8,6 @@ The boilerplate code is derived from the [Postgres example](https://github.com/a
 
 The Blueprint at [.noop/blueprint.yaml](./.noop/blueprint.yaml) builds and runs an optimized production release from [src/main.rs](./src/main.rs)
 
-# Run locally
+# Run Locally
 
 Running the API locally requires [installing Rust](https://www.rust-lang.org/learn/get-started) then starting it with `cargo run`.

@@ -6,18 +6,20 @@ components:
     port: 8080
     build:
       steps:
+        - run: apt install -y libpq-dev
+        - run: cargo install diesel_cli --no-default-features --features postgres
         - directory: /app
-        - copy: [Cargo.toml, Cargo.lock]
+        - copy: [Cargo.toml, Cargo.lock, migrate_and_run.sh]
           destination: ./
         - copy: src
           destination: ./src
-        - copy: sql
-          destination: ./sql
+        - copy: migrations
+          destination: ./migrations
         - run: cargo build --release
     runtime:
       resources:
         - PgDatabase
-      command: /app/target/release/actix-api
+      command: /app/migrate_and_run.sh
       variables:
         PG__URL:
           $resources: PgDatabase.url
