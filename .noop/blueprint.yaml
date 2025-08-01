@@ -1,13 +1,13 @@
----
+name: Rust Actix Template
 components:
   - name: ActixApi
     type: service
-    image: rust:latest
+    image: rust:1.79
     port: 8080
     build:
       steps:
         - run: apt install -y libpq-dev
-        - run: cargo install diesel_cli --no-default-features --features postgres
+        - run: cargo install diesel_cli@2.1.1 --locked --no-default-features --features postgres
         - directory: /app
         - copy: [Cargo.toml, Cargo.lock, migrate_and_run.sh]
           destination: ./
